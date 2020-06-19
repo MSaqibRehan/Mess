@@ -72,7 +72,7 @@
                     ?>
 
 
-                    <form accept="" method="POST" >
+                    <form action="" method="POST" >
                 <div class="form-group">
                   <label class="control-label">Student Name</label>
                   <input class="form-control" type="text" value="<?php echo $student_set['std_name'] ?>" placeholder="Enter full name" required name="name">
@@ -121,7 +121,7 @@
                     ?>
 
 
-                    <form accept="" method="POST" >
+                    <form action="" method="POST" >
                 <div class="form-group">
                   <label class="control-label">Student Name</label>
                   <input class="form-control" type="text" placeholder="Enter full name" required name="name">

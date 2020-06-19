@@ -72,7 +72,7 @@
                     ?>
 
                    
-                    <form accept="" method="POST" >
+                    <form action="" method="POST" >
                       <div class="form-group">
                         <label class="control-label">Name</label>
                         <input class="form-control" value="<?php echo $user_set['full_name']; ?>" type="text" placeholder="Enter full name" required name="name">
@@ -122,7 +122,7 @@
                     ?>
 
                    
-                    <form accept="" method="POST" >
+                    <form action="" method="POST" >
                       <div class="form-group">
                         <label class="control-label">Name</label>
                         <input class="form-control" type="text" placeholder="Enter full name" required name="name">

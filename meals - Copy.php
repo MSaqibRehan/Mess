@@ -4,12 +4,11 @@
   include 'includes/header.php';
 ?>
 <?php 
-   if (isset($_SESSION['login_student'])) {
+   if (isset($_SESSION['login_user'])) {
      $_SESSION['message'] = "<li class='text-danger font-weight-bold'>Login required!</li>";
      header("location:login.php");
    }
 ?>
-    <!-- Sidebar menu-->
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
@@ -37,12 +36,12 @@
   <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i> student Record</h1>
-          <p>Displaying all the registered students</p>
+          <h1><i class="fa fa-th-list"></i> Meals Record</h1>
+          <p>Displaying all the registered Meals</p>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item active"><a href="#">students</a></li>
+          <li class="breadcrumb-item active"><a href="#">Meals</a></li>
         </ul>
       </div>
       <div class="row">
@@ -51,7 +50,7 @@
             <div class="tile-title">
               <div class="row">
                 <div class="col-md-12 d-flex justify-content-end">
-                  <a href="student-form.php" class="btn btn-primary">Add new student</a>
+                  <a href="meals-form.php" class="btn btn-primary">Add new Meal</a>
                 </div>
               </div>
             </div>
@@ -62,40 +61,32 @@
                   }
                 ?>
             	<?php 
-            		$student_list=mysqli_query($conn, "SELECT * FROM student WHERE status = 'active'");
+            		$user_list=mysqli_query($conn, "SELECT * FROM meals WHERE status = 'active'");
 
             	?>
               <table class="table table-hover table-bordered" id="sampleTable">
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Father Name</th>
-                    <th>Rll no.</th>
-                    <th>Mobile No.</th>
-                    <th>Date of Birth</th>
-                    <th>Gender</th>
-                    <th>CNIC</th>
+                    <th>Meal Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Status</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                  <?php 
-                	while ($record =mysqli_fetch_assoc($student_list)) {
+                	while ($record =mysqli_fetch_assoc($user_list)) {
                 ?>
 	                  <tr>
-	                    <td><?= $record['std_name'] ?></td>
-	                    <td><?= $record['father_name'] ?></td>
-                      <td><?= $record['roll_no'] ?></td>
-	                    <td><?= $record['mobile_no'] ?></td>
-	                    <td><?= $record['dob'] ?></td>
-	                    <td><?= $record['gender'] ?></td>
-                      <td><?= $record['cnic'] ?></td>
+	                    <td><?= $record['meal_name'] ?></td>
+	                    <td><?= $record['category'] ?></td>
+	                    <td><?= $record['price'] ?></td>
+	                    <td><?= $record['status'] ?></td>
                       <td>
-                        <a href="student-record.php?student=<?php echo urlencode($record['id']); ?>" class="mx-2" ><i class="fa fa-eye fa-2x" aria-hidden="true"></i>
+                        <a href="meals-form.php?meal=<?php echo urlencode($record['id']); ?>" class="mx-2" ><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
                         </a>
-                        <a href="student-form.php?student=<?php echo urlencode($record['id']); ?>" class="mx-2" ><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
-                        </a>
-                        <a onclick =" return confirm ('Are you sure?')" href="action-student.php?student=<?php echo urlencode($record['id']); ?>&action=delete" class="mx-2"><i class="fa Example of trash-o fa-trash-o fa-2x" aria-hidden="true"></i>
+                        <a onclick =" return confirm ('Are you sure?')" href="action-meals.php?meal=<?php echo urlencode($record['id']); ?>&action=delete" class="mx-2"><i class="fa Example of trash-o fa-trash-o fa-2x" aria-hidden="true"></i>
 </a>
                       </td>
 	                  </tr>
@@ -107,8 +98,6 @@
         </div>
       </div>
     </main>
-
-   
     <!-- Essential javascripts for application to work-->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>

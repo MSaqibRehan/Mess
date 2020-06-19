@@ -43,7 +43,7 @@ require 'includes/header.php'
         <div class="col-md-12">
           <div class="tile">
             <div class="tile-body">
-              <form accept="" method="POST" >
+              <form action="" method="POST" >
                 <div class="form-group">
                   <label class="control-label">Meal Name</label>
                   <input class="form-control" type="text" placeholder="Enter Meal Name" required name="name">
