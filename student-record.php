@@ -4,7 +4,7 @@
   include 'includes/header.php';
 ?>
 <?php 
-   if (isset($_SESSION['login_student'])) {
+   if (!isset($_SESSION['login_student'])) {
      $_SESSION['message'] = "<li class='text-danger font-weight-bold'>Login required!</li>";
      header("location:login.php");
    }
@@ -23,26 +23,46 @@
     <!-- Sidebar menu-->
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-    <aside class="app-sidebar">
-      <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image">
+   <aside class="app-sidebar">
+      <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" width="30" height="30" src="images/user.png" alt="User Image">
         <div>
-          <p class="app-sidebar__user-name">John Doe</p>
-          <p class="app-sidebar__user-designation">Frontend Developer</p>
+          <p class="app-sidebar__user-name font-weight-bold"><?php echo $_SESSION['login_user']; ?></p>
+          <p class="app-sidebar__user-designation"><?php echo $_SESSION['user_role'] ?></p>
         </div>
       </div>
       <ul class="app-menu">
-        <li><a class="app-menu__item" href="index.html"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
-        <li><a class="app-menu__item active" href="user-register.php"><i class="app-menu__icon fa fa-circle-o"></i><span class="app-menu__label">Register User</span></a></li>
-        <li><a class="app-menu__item" href="student-register.php"><i class="app-menu__icon fa fa-circle-o"></i><span class="app-menu__label">Register Student</span></a></li>
-        <li><a class="app-menu__item " href="register-meal.php"><i class="app-menu__icon fa fa-circle-o"></i><span class="app-menu__label">Add New Meal</span></a></li>
-        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">UI Elements</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li><a class="app-menu__item" href="index.php"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+        <?php 
+          if ($_SESSION['user_type'] !="admin") {
+        ?>
+          <li><a class="app-menu__item" href="users.php"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Users</span></a></li>
+        <?php
+          }
+         ?>
+         <!-- ====================================== -->
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-cutlery"></i><span class="app-menu__label">Meals</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
-            <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> Bootstrap Elements</a></li>
-            <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i> Font Icons</a></li>
-            <li><a class="treeview-item" href="ui-cards.html"><i class="icon fa fa-circle-o"></i> Cards</a></li>
-            <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-circle-o"></i> Widgets</a></li>
+            <li><a class="treeview-item" href="meals.php"><i class="icon fa fa-circle-o"></i> Active Meals</a></li>
+            <li><a class="treeview-item" href="inactive-meals.php" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i> Inactive Meals</a></li>
+            
           </ul>
         </li>
+        <!-- ============================================================================= -->
+        
+        <li><a class="app-menu__item" href="students.php"><i class="app-menu__icon fa fa-graduation-cap"></i><span class="app-menu__label">Students</span></a></li>
+       
+        <!-- ===================================================================== -->
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Attendence</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a class="treeview-item" href="attendence.php"><i class="icon fa fa-circle-o"></i> Meal Taken</a></li>
+            <li><a class="treeview-item" href="extra-taken.php"><i class="icon fa fa-circle-o"></i>Extra Taken</a></li>
+            
+          </ul>
+        </li>
+        <!-- ============================================================ -->
+
+        <li><a class="app-menu__item" href="logout.php"><i class="app-menu__icon fa fa-sign-out"></i><span class="app-menu__label">Log Out</span></a></li>
+        
       </ul>
     </aside>
   <main class="app-content">
@@ -181,7 +201,31 @@
                     
                 </div>
                 <div class="tab-pane fade" id="invoice">
-                  <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+                 
+                    <form action="" class="row">
+                    <div class="form-group col-md-4">
+                      <label class="control-label">Select Month</label>
+                      <input type="month" class="form-control" id="month" name="month" placeholder="Please Select Month">
+                      <input type="hidden" name="student" id="student" value="<?php echo $stdid ?>">
+                      
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label class="control-label"></label>
+                      <button type="button" id="getinvoice" class="btn btn-primary form-control mt-2">Create Invoice</button>
+                    </div>
+                  </form>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <span class="errormonth">
+                        
+                      </span>
+                    </div>
+                  </div>
+                  <div class="load_data">
+                    
+                  </div>
+              
+                  
                 </div>
                
               </div>
@@ -212,5 +256,33 @@
     <script type="text/javascript">$('#sampleTable').DataTable();$('#sampleTable1').DataTable();</script>
     <!-- Google analytics script-->
     
+    <script type="text/javascript">
+      $('#getinvoice').click(function(e){  
+    e.preventDefault();
+    var month = $('#month').val();
+    if(month == ''){
+      $('.errormonth').html(
+      '<span style="color:red;">Enter month !</span>'
+      );
+      $('#month').focus();
+      return false;
+      }else{
+          $('.errormonth').html("");
+        }
+          var student=$('#student').val();
+alert(month);
+          $.ajax({
+            url : "load-invoice.php",
+            method:"POST",
+            data:{ month:month, student:student},           
+              success:function(data){
+                $('.load_data').html(data);
+                  }
+            });
+  });
+
+    </script>
+
+
   </body>
 </html>

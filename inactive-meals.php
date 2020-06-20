@@ -4,7 +4,7 @@
   include 'includes/header.php';
 ?>
 <?php 
-   if (isset($_SESSION['login_user'])) {
+   if (!isset($_SESSION['login_user'])) {
      $_SESSION['message'] = "<li class='text-danger font-weight-bold'>Login required!</li>";
      header("location:login.php");
    }
@@ -12,48 +12,63 @@
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
-      <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image">
+      <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" width="30" height="30" src="images/user.png" alt="User Image">
         <div>
-          <p class="app-sidebar__user-name">John Doe</p>
-          <p class="app-sidebar__user-designation">Frontend Developer</p>
+          <p class="app-sidebar__user-name font-weight-bold"><?php echo $_SESSION['login_user']; ?></p>
+          <p class="app-sidebar__user-designation"><?php echo $_SESSION['user_role'] ?></p>
         </div>
       </div>
       <ul class="app-menu">
-        <li><a class="app-menu__item" href="index.html"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
-        <li><a class="app-menu__item active" href="user-register.php"><i class="app-menu__icon fa fa-circle-o"></i><span class="app-menu__label">Register User</span></a></li>
-        <li><a class="app-menu__item" href="student-register.php"><i class="app-menu__icon fa fa-circle-o"></i><span class="app-menu__label">Register Student</span></a></li>
-        <li><a class="app-menu__item " href="register-meal.php"><i class="app-menu__icon fa fa-circle-o"></i><span class="app-menu__label">Add New Meal</span></a></li>
-        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">UI Elements</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li><a class="app-menu__item" href="index.php"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+        <?php 
+          if ($_SESSION['user_type'] !="admin") {
+        ?>
+          <li><a class="app-menu__item" href="users.php"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Users</span></a></li>
+        <?php
+          }
+         ?>
+         <!-- ====================================== -->
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-cutlery"></i><span class="app-menu__label">Meals</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
-            <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> Bootstrap Elements</a></li>
-            <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i> Font Icons</a></li>
-            <li><a class="treeview-item" href="ui-cards.html"><i class="icon fa fa-circle-o"></i> Cards</a></li>
-            <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-circle-o"></i> Widgets</a></li>
+            <li><a class="treeview-item" href="meals.php"><i class="icon fa fa-circle-o"></i> Active Meals</a></li>
+            <li><a class="treeview-item active" href="inactive-meals.php" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i> Inactive Meals</a></li>
+            
           </ul>
         </li>
+        <!-- ============================================================================= -->
+        
+        <li><a class="app-menu__item" href="students.php"><i class="app-menu__icon fa fa-graduation-cap"></i><span class="app-menu__label">Students</span></a></li>
+       
+        <!-- ===================================================================== -->
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Attendence</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a class="treeview-item " href="attendence.php"><i class="icon fa fa-circle-o"></i> Meal Taken</a></li>
+            <li><a class="treeview-item" href="extra-taken.php"><i class="icon fa fa-circle-o"></i>Extra Taken</a></li>
+            
+          </ul>
+        </li>
+        <!-- ============================================================ -->
+
+        <li><a class="app-menu__item" href="logout.php"><i class="app-menu__icon fa fa-sign-out"></i><span class="app-menu__label">Log Out</span></a></li>
+        
       </ul>
     </aside>
   <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i> Meals Record</h1>
-          <p>Displaying all the registered Meals</p>
+          <h1><i class="fa fa-th-list"></i> Inactive Meals Record</h1>
+          <p>Displaying all the Inactive Meals</p>
         </div>
         <ul class="app-breadcrumb breadcrumb side">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item active"><a href="#">Meals</a></li>
+          <li class="breadcrumb-item active"><a href="#">Inactive Meals</a></li>
         </ul>
       </div>
       <div class="row">
         <div class="col-md-12">
           <div class="tile">
-            <div class="tile-title">
-              <div class="row">
-                <div class="col-md-12 d-flex justify-content-end">
-                  <a href="meals-form.php" class="btn btn-primary">Add new Meal</a>
-                </div>
-              </div>
-            </div>
+            
+              
             <div class="tile-body">
             	<?php 
                   if (isset($_SESSION['message'])) {
@@ -61,7 +76,7 @@
                   }
                 ?>
             	<?php 
-            		$user_list=mysqli_query($conn, "SELECT * FROM meals WHERE status = 'active'");
+            		$user_list=mysqli_query($conn, "SELECT * FROM meals WHERE status = 'inactive'");
 
             	?>
               <table class="table table-hover table-bordered" id="sampleTable">
@@ -84,9 +99,7 @@
 	                    <td><?= $record['price'] ?></td>
 	                    <td><?= $record['status'] ?></td>
                       <td>
-                        <a href="meals-form.php?meal=<?php echo urlencode($record['id']); ?>" class="mx-2" ><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
-                        </a>
-                        <a onclick =" return confirm ('Are you sure?')" href="action-meals.php?meal=<?php echo urlencode($record['id']); ?>&action=delete" class="mx-2"><i class="fa Example of trash-o fa-trash-o fa-2x" aria-hidden="true"></i>
+                        <a onclick =" return confirm ('Are you sure?')" href="action-meals.php?meal=<?php echo urlencode($record['id']); ?>&action=restore" class="mx-2"><i class="fa fa-recycle fa-2x" aria-hidden="true"></i>
 </a>
                       </td>
 	                  </tr>

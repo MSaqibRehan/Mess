@@ -3,7 +3,7 @@
   include 'includes/sessions.php';
 ?>
 <?php 
-   if (isset($_SESSION['login_user'])) {
+   if (!isset($_SESSION['login_user'])) {
      $_SESSION['message'] = "<li class='text-danger font-weight-bold'>Login required!</li>";
      header("location:login.php");
    }

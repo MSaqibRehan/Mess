@@ -1,4 +1,4 @@
- <?php
+<?php
   include 'includes/connection.php';
   include 'includes/sessions.php';
   include 'includes/header.php';
@@ -9,9 +9,10 @@
      header("location:login.php");
    }
 ?>
+
     <!-- Sidebar menu-->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-   <aside class="app-sidebar">
+    <aside class="app-sidebar">
       <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" width="30" height="30" src="images/user.png" alt="User Image">
         <div>
           <p class="app-sidebar__user-name font-weight-bold"><?php echo $_SESSION['login_user']; ?></p>
@@ -23,7 +24,7 @@
         <?php 
           if ($_SESSION['user_type'] !="admin") {
         ?>
-          <li><a class="app-menu__item active" href="users.php"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Users</span></a></li>
+          <li><a class="app-menu__item" href="users.php"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Users</span></a></li>
         <?php
           }
          ?>
@@ -42,7 +43,7 @@
         <!-- ===================================================================== -->
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Attendence</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
-            <li><a class="treeview-item " href="attendence.php"><i class="icon fa fa-circle-o"></i> Meal Taken</a></li>
+            <li><a class="treeview-item active" href="attendence.php"><i class="icon fa fa-circle-o"></i> Meal Taken</a></li>
             <li><a class="treeview-item" href="extra-taken.php"><i class="icon fa fa-circle-o"></i>Extra Taken</a></li>
             
           </ul>
@@ -53,76 +54,111 @@
         
       </ul>
     </aside>
-  <main class="app-content">
+    <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-th-list"></i> User Record</h1>
-          <p>Displaying all the registered users</p>
+          <h1><i class="fa fa-dashboard"></i> User Profile</h1>
+          <p>Showing user Profile</p>
         </div>
-        <ul class="app-breadcrumb breadcrumb side">
+        <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item active"><a href="#">users</a></li>
+          <li class="breadcrumb-item"><a href="#">User Profile</a></li>
         </ul>
       </div>
       <div class="row">
         <div class="col-md-12">
           <div class="tile">
-            <div class="tile-title">
-              <div class="row">
-                <div class="col-md-12 d-flex justify-content-end">
-                  <a href="user-form.php" class="btn btn-primary">Add new User</a>
-                </div>
-              </div>
-            </div>
             <div class="tile-body">
-            	<?php 
+              <?php 
                   if (isset($_SESSION['message'])) {
                     message();
                   }
                 ?>
-            	<?php 
-            		$user_list=mysqli_query($conn, "SELECT * FROM users WHERE id != 1");
-
-            	?>
-              <table class="table table-hover table-bordered" id="sampleTable">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Date of Birth</th>
-                    <th>Gender</th>
-                    <th>User Role</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                 <?php 
-                	while ($record =mysqli_fetch_assoc($user_list)) {
-                ?>
-	                  <tr>
-	                    <td><?= $record['full_name'] ?></td>
-	                    <td><?= $record['username'] ?></td>
-	                    <td><?= $record['email'] ?></td>
-	                    <td><?= $record['dob'] ?></td>
-	                    <td><?= $record['gender'] ?></td>
-	                    <td><?= $record['user_role'] ?></td>
-                      <td>
-                        <a href="user-form.php?user=<?php echo urlencode($record['id']); ?>" class="mx-2" ><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
-                        </a>
-                        <a onclick =" return confirm ('Are you sure?')" href="action-user.php?user=<?php echo urlencode($record['id']); ?>&action=delete" class="mx-2"><i class="fa Example of trash-o fa-trash-o fa-2x" aria-hidden="true"></i>
-</a>
+              <div class="row">
+                <div class="col-md-6">
+                  <?php 
+                  $id=$_SESSION['login_id'];
+                  
+                    $userq=mysqli_query($conn,"SELECT * FROM users WHERE id={$id}");
+                     
+                    $user_set=mysqli_fetch_assoc($userq);
+                   ?>
+                   <table class="table table-responsive text-center">
+                    <tr>
+                      <td colspan="2">
+                        <img src="images/user.png" alt="user Image" style="max-height: 200px; max-width: 200px;" class="img rounded-circle img-fluid">
                       </td>
-	                  </tr>
-                 <?php } ?> 
-                </tbody>
-              </table>
+
+                    </tr>
+                    <tr>
+                      <th>Full Name</th>
+                      <td> <?php echo $user_set['full_name']; ?></td>
+                    </tr>
+                    <tr>
+                      <th>Username</th>
+                      <td> <?php echo $user_set['username']; ?></td>
+                    </tr>
+                    <tr>
+                      <th>User Email</th>
+                      <td> <?php echo $user_set['email']; ?></td>
+                    </tr>
+                    <tr>
+                      <th>User DOB</th>
+                      <td> <?php echo $user_set['dob']; ?></td>
+                    </tr>
+                    <tr>
+                      <th>User Gender</th>
+                      <td> <?php echo $user_set['gender']; ?></td>
+                    </tr>
+                    <tr>
+                      <th>User Role</th>
+                      <td> <?php echo $user_set['user_role']; ?></td>
+                    </tr>
+                     
+                   </table>
+                </div>
+                <div class="col-md-6">
+                  <h3>Update Password</h3>
+                  <form action="" method="POST">
+                    <div class="form-group">
+                      <label class="control-label">Enter New Password</label>
+                      <input type="password" name="password" class="form-control" placeholder="Please Enter New Password" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="submit" value="Update Password" name="submit" class="btn btn-success form-control">
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </main>
-
+    <?php 
+      if (isset($_POST['submit'])) {
+        $password=$_POST['password'];
+        if (empty($password)) {
+          $_SESSION['message'] = null;
+            if(empty($password)){
+              $_SESSION['message'] .= "<li>Please Enter New Password Before Submit</li>";
+            }
+            header("location:profile.php");
+        }else{
+          $pass=md5($password);
+          $id=$_SESSION['login_id'];
+          $query="UPDATE users SET password='$pass' WHERE id=$id";
+          if (mysqli_query($conn , $query)) {
+              $_SESSION['message'] = "Password Update Success";
+              header("location:profile.php");
+            }else{
+              $_SESSION['message'] = mysqli_error($conn);
+              header("location:profile.php");
+            }
+        }
+        
+      }
+     ?>
     <!-- Essential javascripts for application to work-->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -131,10 +167,6 @@
     <!-- The javascript plugin to display page loading on top-->
     <script src="js/plugins/pace.min.js"></script>
     <!-- Page specific javascripts-->
-    <!-- Data table plugin-->
-    <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
-    <script type="text/javascript">$('#sampleTable').DataTable();</script>
     <!-- Google analytics script-->
     <script type="text/javascript">
       if(document.location.hostname == 'pratikborsadiya.in') {
