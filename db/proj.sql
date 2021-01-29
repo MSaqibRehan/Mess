@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2020 at 11:27 PM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 7.4.7
+-- Generation Time: Sep 22, 2020 at 06:51 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,7 +44,7 @@ CREATE TABLE `attendence` (
 
 INSERT INTO `attendence` (`id`, `std_id`, `meal_id`, `atdate`, `created_at`, `mcreated_by`) VALUES
 (1, 2, 1, '2222-02-22', '2020-06-20 01:19:01', 'rehan'),
-(2, 2, 1, '0333-03-31', '2020-06-20 01:19:11', 'rehan'),
+(2, 2, 1, '2020-08-12', '2020-06-20 01:19:11', 'rehan'),
 (3, 3, 2, '2222-02-22', '2020-06-20 01:25:46', 'rehan'),
 (4, 2, 2, '2222-02-22', '2020-06-20 02:24:51', 'rehan');
 
@@ -93,8 +93,8 @@ CREATE TABLE `meals` (
 --
 
 INSERT INTO `meals` (`id`, `meal_name`, `category`, `price`, `status`, `created_by`, `created_at`) VALUES
-(1, 'dfd', 'breakfast', 213213, 'active', 'rehan', '2020-06-19 01:55:26'),
-(2, 'hjkhjk', 'lunch', 213, 'active', 'rehan', '2020-06-19 01:57:08');
+(1, 'dfd', 'breakfast', 100, 'active', 'rehan', '2020-06-19 01:55:26'),
+(2, 'hjkhjk', 'lunch', 50, 'active', 'rehan', '2020-06-19 01:57:08');
 
 -- --------------------------------------------------------
 
@@ -150,12 +150,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `full_name`, `username`, `email`, `password`, `dob`, `gender`, `user_type`, `user_role`, `created_at`, `created_by`) VALUES
-(1, 'Super', 'superadmin', 'superadmin@gmail.com', '123456', '2000-12-09', 'Male', 'superadmin', 'Administrator', '0000-00-00 00:00:00', ''),
-(13, 'Kashif Ali', 'Adminasdsa', 'kashifsahil622@gmail.com', '', '0000-00-00', 'on', 'admin', 'sadsad', '2020-06-17 02:31:54', 'rehan'),
-(14, 'dasdsa', 'Admin', 'asdsad@dsad', '', '0031-03-21', 'on', 'admin', 'sadsadsa', '2020-06-17 02:33:01', 'rehan'),
-(15, 'saqib Rehan', 'Admin', 'saqibrehan587@gmail.com', '', '2323-12-31', 'male', 'admin', 'fsdfdsf', '2020-06-17 02:34:01', 'rehan'),
-(16, 'asdsadsadsa', 'Admin', 'zzdsadss#@gdsf', '', '3231-12-21', 'male', 'admin', 'sadsadsa', '2020-06-17 02:35:01', 'rehan'),
-(17, 'saqib rehan', '', '', '', '1322-02-12', 'male', 'admin', '', '2020-06-18 00:21:33', 'rehan');
+(1, 'Super', 'superadmin', 'superadmin@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', '2000-12-09', 'Male', 'superadmin', 'Administrator', '0000-00-00 00:00:00', ''),
+(13, 'Kashif Ali', 'Adminasdsa', 'kashifsahil622@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00', 'on', 'admin', 'sadsad', '2020-06-17 02:31:54', 'rehan');
 
 --
 -- Indexes for dumped tables
@@ -223,7 +219,7 @@ ALTER TABLE `student`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

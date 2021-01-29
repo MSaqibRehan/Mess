@@ -53,18 +53,7 @@
         
       </ul>
     </aside>
-    <main class="app-content">
-      <div class="app-title">
-        <div>
-          <h1><i class="fa fa-dashboard"></i> Dashboard</h1>
-          <p>Mess Management System</p>
-        </div>
-        <ul class="app-breadcrumb breadcrumb">
-          <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-        </ul>
-      </div>
-      <?php 
+    <?php 
       date_default_timezone_set("Asia/Karachi");
        $date =  date("Y-m-d");
         $studentsq=mysqli_query($conn,"SELECT * FROM student WHERE status = 'active'");
@@ -76,8 +65,8 @@
         $extra_taken_q=mysqli_query($conn,"SELECT * FROM extra_taken WHERE atdate = '$date'");
         $extra_taken=mysqli_num_rows($extra_taken_q);
        ?>
-      <div class="row">
-        <div class="col-md-6 col-lg-3">
+    <main class="app-content">
+      <div class="col-md-6 col-lg-3">
           <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
             <div class="info">
               <h4>Students</h4>
@@ -85,6 +74,20 @@
             </div>
           </div>
         </div>
+      <div class="app-title">
+        
+        <div>
+          <h1><i class="fa fa-dashboard"></i> Dashboard</h1>
+          <p>Mess Management System</p>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+          <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+          <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        </ul>
+      </div>
+      
+      <div class="row">
+        
         <div class="col-md-6 col-lg-3">
           <div class="widget-small info coloured-icon"><i class="icon fa fa-cutlery fa-3x"></i>
             <div class="info">

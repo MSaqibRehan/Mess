@@ -4,7 +4,7 @@
   include 'includes/header.php';
 ?>
 <?php 
-   if (!isset($_SESSION['login_student'])) {
+   if (!isset($_SESSION['login_user'])) {
      $_SESSION['message'] = "<li class='text-danger font-weight-bold'>Login required!</li>";
      header("location:login.php");
    }

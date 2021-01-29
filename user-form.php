@@ -208,9 +208,7 @@
 
        
 
-        $comment_query = "SELECT * FROM users WHERE username = '$username' ";
-             $comments = mysqli_query($conn , $comment_query);
-             $count = mysqli_num_rows($comments);
+       
              
         
         date_default_timezone_set("Asia/Karachi");
@@ -219,7 +217,7 @@
         
 
    
-       if (empty($name) || empty($username) || empty($email) || empty($password) || empty($dob) || empty($role) || !preg_match("/^[a-zA-Z0-9#;]+$/" , $username) ||  $count>= 0  ) {
+       if (empty($name) || empty($username) || empty($email) || empty($password) || empty($dob) || empty($role) || !preg_match("/^[a-zA-Z0-9#;]+$/" , $username)   ) {
 
             $_SESSION['message'] = null;
             if(empty($name)){
@@ -229,8 +227,6 @@
               $_SESSION['message'] .= "<li>Enter user name</li>" ;
             }elseif (!preg_match("/^[a-zA-Z 0-9$;]+$/" , $username)) {
              $_SESSION['message'] .= "<li>no special characters are allowed for username</li>" ;
-            }elseif( $count>= 0){
-              $_SESSION['message'] .= "<li>Username Already Taken . Try Another One</li>" ;
             }
              if(empty($email)){
               $_SESSION['message'] .= "<li>Please Enter Valid email address</li>";
@@ -272,9 +268,7 @@
 
        
 
-        $comment_query = "SELECT * FROM users WHERE username = '$username' AND id !=$userid ";
-             $comments = mysqli_query($conn , $comment_query);
-             $count = mysqli_num_rows($comments);
+        
              
         
         date_default_timezone_set("Asia/Karachi");
@@ -283,7 +277,7 @@
         
 
    
-       if (empty($name) || empty($username) || empty($email)  || empty($dob) || empty($role) || !preg_match("/^[a-zA-Z0-9#;]+$/" , $username) ||  $count>= 1  ) {
+       if (empty($name) || empty($username) || empty($email)  || empty($dob) || empty($role) || !preg_match("/^[a-zA-Z0-9#;]+$/" , $username)   ) {
 
             $_SESSION['message'] = null;
             if(empty($name)){
@@ -293,8 +287,6 @@
               $_SESSION['message'] .= "<li>Enter user name</li>" ;
             }elseif (!preg_match("/^[a-zA-Z 0-9$;]+$/" , $username)) {
              $_SESSION['message'] .= "<li>no special characters are allowed for username</li>" ;
-            }elseif( $count>= 0){
-              $_SESSION['message'] .= "<li>Username Already Taken . Try Another One</li>" ;
             }
              if(empty($email)){
               $_SESSION['message'] .= "<li>Please Enter Valid email address</li>";
